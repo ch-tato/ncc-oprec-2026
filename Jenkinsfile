@@ -21,7 +21,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/hamasfaa/demo-jenkins',
+                    url: 'https://github.com/ch-tato/ncc-oprec-2026',
                     credentialsId: 'jenkinsUser'
             }
         }
