@@ -65,6 +65,7 @@ jobs:
           script_stop: true
           script: |
             cd ncc-oprec-2026
+            echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
             docker compose pull app
             docker compose up -d
             docker image prune -f
