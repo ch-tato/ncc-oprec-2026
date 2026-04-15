@@ -82,8 +82,122 @@
 //     }
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// pipeline {
+//     agent none
+
+//     environment {
+//         SONARQUBE_ENV = 'sonarserver'
+//         PROJECT_KEY   = 'go-project'
+//         PROJECT_NAME  = 'go-project'
+//     }
+
+//     stages {
+
+//         stage('Build & Test') {
+//             agent {
+//                 docker {
+//                     image 'golang:1.23-bookworm'
+//                     args '''-u root \
+//                             -e HOME=/tmp \
+//                             -e GOCACHE=/tmp/go-cache \
+//                             -e GOPATH=/tmp/go'''
+//                 }
+//             }
+//             steps {
+//                 sh '''
+//                     git config --global --add safe.directory ${WORKSPACE}
+//                     go version
+//                     go mod download
+//                     go build ./...
+//                     go test ./... -coverprofile=coverage.out
+//                 '''
+//                 stash name: 'go-artifacts',
+//                       includes: 'coverage.out, */.go, go.mod, go.sum'
+//             }
+//         }
+
+//         stage('SonarQube Analysis') {
+//             agent any
+//             steps {
+//                 withSonarQubeEnv("${SONARQUBE_ENV}") {
+//                     sh """
+//                         /tmp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+//                           -Dsonar.projectKey=${PROJECT_KEY} \
+//                           -Dsonar.projectName=${PROJECT_NAME} \
+//                           -Dsonar.sources=. \
+//                           -Dsonar.go.coverage.reportPaths=coverage.out
+//                     """
+//                 }
+//             }
+//         }
+
+//         stage('Quality Gate') {
+//             agent { label 'built-in' }
+//             steps {
+//                 timeout(time: 20, unit: 'MINUTES') {
+//                     waitForQualityGate abortPipeline: true
+//                 }
+//             }
+//         }
+//     }
+
+//     post {
+//         success { echo 'Pipeline sukses' }
+//         failure { echo 'Pipeline gagal' }
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 pipeline {
-    agent none
+    // 1. GLOBAL AGENT: One container is used for the entire pipeline
+    agent {
+        docker {
+            image 'golang:1.23-bookworm'
+            args '''-u root \
+                    -e HOME=/tmp \
+                    -e GOCACHE=/tmp/go-cache \
+                    -e GOPATH=/tmp/go'''
+        }
+    }
 
     environment {
         SONARQUBE_ENV = 'sonarserver'
@@ -92,32 +206,42 @@ pipeline {
     }
 
     stages {
-
-        stage('Build & Test') {
-            agent {
-                docker {
-                    image 'golang:1.23-bookworm'
-                    args '''-u root \
-                            -e HOME=/tmp \
-                            -e GOCACHE=/tmp/go-cache \
-                            -e GOPATH=/tmp/go'''
-                }
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/ch-tato/ncc-oprec-2026',
+                    credentialsId: 'jenkinsUser'
             }
+        }
+
+        stage('Setup') {
             steps {
                 sh '''
                     git config --global --add safe.directory ${WORKSPACE}
+                    apt-get update -qq
+                    
+                    # Install Java (required by Sonar Scanner) and download tools
+                    apt-get install -y -qq default-jre-headless wget unzip
+                    
+                    # Download scanner to /tmp. Since the agent is global, this stays available!
+                    wget -qO /tmp/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+                    unzip -q /tmp/sonar-scanner.zip -d /tmp/
+                    
                     go version
                     go mod download
-                    go build ./...
-                    go test ./... -coverprofile=coverage.out
                 '''
-                stash name: 'go-artifacts',
-                      includes: 'coverage.out, */.go, go.mod, go.sum'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                sh 'go build -v ./...'
+                sh 'go test ./... -v -coverprofile=coverage.out'
             }
         }
 
         stage('SonarQube Analysis') {
-            agent any
+            // Notice: No 'agent' block here. It automatically uses the global Golang container.
             steps {
                 withSonarQubeEnv("${SONARQUBE_ENV}") {
                     sh """
@@ -132,7 +256,6 @@ pipeline {
         }
 
         stage('Quality Gate') {
-            agent { label 'built-in' }
             steps {
                 timeout(time: 20, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
@@ -142,7 +265,11 @@ pipeline {
     }
 
     post {
-        success { echo 'Pipeline sukses' }
-        failure { echo 'Pipeline gagal' }
+        success {
+            echo 'Pipeline sukses'
+        }
+        failure {
+            echo 'Pipeline gagal'
+        }
     }
 }
