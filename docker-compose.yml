@@ -1,0 +1,10 @@
+services:
+  app:
+    # build: .
+    image: ghcr.io/ch-tato/ncc-oprec-2026:latest
+    container_name: module_1
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    restart: unless-stopped
