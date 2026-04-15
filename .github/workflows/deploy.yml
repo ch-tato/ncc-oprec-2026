@@ -33,7 +33,30 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Deploy to VPS
+      # - name: Deploy to VPS
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     username: ${{ secrets.VPS_USERNAME }}
+      #     key: ${{ secrets.VPS_SSH_KEY }}
+      #     script_stop: true
+      #     script: |
+      #       cd ncc-oprec-2026
+      #       git pull origin module-1
+      #       docker compose pull app
+      #       docker compose up -d
+      #       docker image prune -f
+
+      - name: Copy docker-compose via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "ncc-oprec-2026" 
+
+      - name: Execute Deployment on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -42,7 +65,6 @@ jobs:
           script_stop: true
           script: |
             cd ncc-oprec-2026
-            git pull origin module-1
             docker compose pull app
             docker compose up -d
             docker image prune -f
