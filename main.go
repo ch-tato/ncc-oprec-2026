@@ -29,7 +29,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	response := HealthResponse{
-		Name:      "Jokowi",
+		Name:      "Muhammad Quthbi Danish Abqori",
 		NRP:       "5025241036",
 		Status:    "Sukses Sarimi Isi 200 OK",
 		Timestamp: time.Now().Format(time.RFC3339),
