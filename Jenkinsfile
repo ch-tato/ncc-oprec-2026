@@ -117,22 +117,15 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            agent { label 'built-in' }
             steps {
-                deleteDir()          // <<< PENTING
-                unstash 'go-artifacts'
-
-                script {
-                    def SCANNER_HOME = tool 'sonarqube8.0'
-                    withSonarQubeEnv("${SONARQUBE_ENV}") {
-                        sh """
-                            ${SCANNER_HOME}/bin/sonar-scanner \
-                              -Dsonar.projectKey=${PROJECT_KEY} \
-                              -Dsonar.projectName=${PROJECT_NAME} \
-                              -Dsonar.sources=. \
-                              -Dsonar.go.coverage.reportPaths=coverage.out
-                        """
-                    }
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh """
+                        /tmp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+                          -Dsonar.projectKey=${PROJECT_KEY} \
+                          -Dsonar.projectName=${PROJECT_NAME} \
+                          -Dsonar.sources=. \
+                          -Dsonar.go.coverage.reportPaths=coverage.out
+                    """
                 }
             }
         }
