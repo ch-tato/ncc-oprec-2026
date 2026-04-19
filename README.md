@@ -1,2 +1,6 @@
-# ncc-oprec-2026
-This repository contains all the assignments (separated by branch) during the whole open recruitment of NCC Lab
+# Laporan Penugasan Modul 2 Open Recruitment NCC 2026
+
+|Nama|NRP|
+|---|---|
+|Muhammad Quthbi Danish Abqori|5025241036|
+
