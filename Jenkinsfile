@@ -58,6 +58,7 @@ pipeline {
             steps {
                 echo 'Deploying to VPS...'
                 sh '''
+                echo "PORT=8888" > .env
                 docker compose up -d --build
                 docker image prune -f
                 '''
