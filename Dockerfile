@@ -17,10 +17,10 @@ USER appuser
 WORKDIR /app
 COPY --from=builder /app/main .
 
-ENV PORT=8080
+ENV PORT=8888
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/health || exit 1
 
-EXPOSE 8080
+EXPOSE 8888
 
 CMD ["./main"]
