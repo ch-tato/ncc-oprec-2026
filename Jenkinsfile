@@ -3,8 +3,8 @@ pipeline {
     
     environment {
         PATH = "/usr/local/go/bin:$PATH"
-        GOCACHE = "${WORKSPACE}/.cache/go-build"
-        GOPATH = "${WORKSPACE}/go"
+        GOCACHE = "${HOME}/.cache/go-build"
+        GOMODCACHE = "${HOME}/go/pkg/mod"
         SONARQUBE_ENV = 'SonarQube'
         SCANNER_HOME = tool 'sonar-scanner'
         PROJECT_KEY   = 'ncc-module-2'
