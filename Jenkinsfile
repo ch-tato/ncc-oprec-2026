@@ -24,6 +24,7 @@ pipeline {
                     steps {
                         echo 'Compiling the application...'
                         // sh 'go build -o main .'
+                        // test
                     }
                 }
             }
