@@ -1,0 +1,9 @@
+mode: set
+module-2/main.go:22.60,23.32 1 1
+module-2/main.go:23.32,26.3 2 1
+module-2/main.go:28.2,39.60 4 1
+module-2/main.go:39.60,41.3 1 0
+module-2/main.go:44.13,49.16 3 0
+module-2/main.go:49.16,51.3 1 0
+module-2/main.go:53.2,57.59 3 0
+module-2/main.go:57.59,59.3 1 0
