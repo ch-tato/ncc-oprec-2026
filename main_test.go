@@ -31,7 +31,7 @@ func TestHealthHandler(t *testing.T) {
 		t.Fatalf("Failed to parse JSON response: %v\nRaw Body: %s", err, rr.Body.String())
 	}
 
-	expectedKeys := []string{"name", "nrp", "status", "timestamp", "uptime"}
+	expectedKeys := []string{"name", "nrp", "status", "message", "timestamp", "uptime"}
 	for _, key := range expectedKeys {
 		if _, ok := responseBody[key]; !ok {
 			t.Errorf("JSON response is missing expected key: '%s'", key)

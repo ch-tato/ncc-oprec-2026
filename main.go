@@ -15,6 +15,7 @@ type HealthResponse struct {
 	Name      string `json:"name"`
 	NRP       string `json:"nrp"`
 	Status    string `json:"status"`
+	Message   string `json:"message"`
 	Timestamp string `json:"timestamp"`
 	Uptime    string `json:"uptime"`
 }
@@ -32,6 +33,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 		Name:      "Muhammad Quthbi Danish Abqori",
 		NRP:       "5025241036",
 		Status:    "Sukses Sarimi Isi 200 OK",
+		Message:   "Alhamdulillah, pipeline berjalan dengan lancar",
 		Timestamp: time.Now().Format(time.RFC3339),
 		Uptime:    time.Since(startTime).String(),
 	}
