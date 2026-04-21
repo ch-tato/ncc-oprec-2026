@@ -23,7 +23,7 @@ pipeline {
                 stage('Compile Build') {
                     steps {
                         echo 'Compiling the application...'
-                        sh 'go build -o main .'
+                        // sh 'go build -o main .'
                     }
                 }
             }
