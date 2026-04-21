@@ -37,16 +37,27 @@ pipeline {
                     -Dsonar.projectKey=ncc-module-2 \
                     -Dsonar.projectName="NCC Module 2" \
                     -Dsonar.sources=. \
-                    
+                    -Dsonar.exclusions=**/*_test.go \
+                    -Dsonar.go.coverage.reportPaths=coverage.out
                     """
                 }
             }
         }
 
-        stage('Quality Gate Check') {}
+        stage('Quality Gate Check') {
+            steps {
+                echo 'Waiting for Quality Gate...'
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
     }
 
     post {
-
+        always {
+            echo 'Pipeline finished. Cleaning up workspace...'
+            cleanWs()
+        }
     }
 }
