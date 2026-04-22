@@ -24,7 +24,6 @@ pipeline {
                 stage('Some important stage') {
                     steps {
                          echo 'Doing some very IMPORTANT stuffs...'
-                         echo 'test'
                     }
                 }
             }
@@ -83,10 +82,6 @@ pipeline {
     }
 
     post {
-        // always {
-        //     echo 'Pipeline finished. Cleaning up workspace...'
-        //     cleanWs patterns: [[pattern: '.cache/**', type: 'EXCLUDE']]
-        // }
         failure {
             echo 'Pipeline failed. Please check the logs.'
         }
