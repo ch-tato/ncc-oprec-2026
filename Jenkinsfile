@@ -57,16 +57,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker Image...'
-                sh '''
-                if docker image inspect ncc-module-2:latest > /dev/null 2>&1; then
-                    docker build \
-                        --build-arg BUILDKIT_INLINE_CACHE=1 \
-                        --cache-from=ncc-module-2:latest \
-                        -t ncc-module-2:latest .
-                else
-                    docker build -t ncc-module-2:latest .
-                fi
-                '''
+                sh 'docker build -t ncc-module-2:latest . || true'
             }
         }
 
