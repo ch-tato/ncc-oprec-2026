@@ -2,9 +2,10 @@ pipeline {
     agent any
     
     environment {
+        DOCKER_BUILDKIT = '1'
         PATH = "/usr/local/go/bin:$PATH"
-        GOCACHE = "${HOME}/.cache/go-build"
-        GOMODCACHE = "${HOME}/go/pkg/mod"
+        GOCACHE = "${WORKSPACE}/.cache/go-build"
+        GOMODCACHE = "${WORKSPACE}/go/pkg/mod"
         SONARQUBE_ENV = 'SonarQube'
         SCANNER_HOME = tool 'sonar-scanner'
         PROJECT_KEY   = 'ncc-module-2'
@@ -12,7 +13,7 @@ pipeline {
     }
 
     stages {
-        stage('Build and Test') {
+        stage('Test') {
             parallel {
                 stage('Unit Test') {
                     steps {
@@ -20,10 +21,9 @@ pipeline {
                         sh 'go test -v ./... -coverprofile=coverage.out || true'
                     }
                 }
-                stage('Compile Build') {
+                stage('Some important stage') {
                     steps {
-                        echo 'Compiling the application...'
-                        // sh 'go build -o main .'
+                         echo 'Doing some very IMPORTANT stuffs...'
                     }
                 }
             }
@@ -54,13 +54,24 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker Image...'
+                sh '''
+                docker build \
+                    --build-arg BUILDKIT_INLINE_CACHE=1 \
+                    --cache-from ncc-module-2:latest \
+                    -t ncc-module-2:latest .
+                '''
+            }
+        }
+
         stage('Deploy to VPS') {
             steps {
                 echo 'Deploying to VPS...'
                 sh '''
                 echo "PORT=8888" > .env
-                docker compose up -d --build
-                docker image prune -f
+                docker compose up -d
                 '''
             }
         }
@@ -69,7 +80,7 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished. Cleaning up workspace...'
-            cleanWs()
+            cleanWs patterns: [[pattern: '.cache/**', type: 'EXCLUDE']]
         }
         failure {
             echo 'Pipeline failed. Please check the logs.'

@@ -4,9 +4,13 @@ FROM golang:1.26-alpine AS builder
 WORKDIR /app
 
 COPY go.mod ./
+RUN --mount=type=cache,target=/go/pkg/mod \
+    go mod download
+
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=linux go build -o main .
 
 # runner stage
 FROM alpine:3.23.3
