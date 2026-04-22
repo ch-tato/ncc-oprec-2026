@@ -24,6 +24,7 @@ pipeline {
                 stage('Some important stage') {
                     steps {
                          echo 'Doing some very IMPORTANT stuffs...'
+                         echo 'test'
                     }
                 }
             }
