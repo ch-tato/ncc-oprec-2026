@@ -45,10 +45,6 @@ func main() {
 
 	port := 1234
 
-	if port == "" {
-		port = "8000"
-	}
-
 	http.HandleFunc("/health", healthHandler)
 
 	fmt.Printf("Server is running on port %s...\n", port)
