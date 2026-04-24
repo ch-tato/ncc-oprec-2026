@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -44,7 +43,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	startTime = time.Now()
 
-	port := os.Getenv("PORT")
+	port := 1234
 
 	if port == "" {
 		port = "8000"
