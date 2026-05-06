@@ -18,7 +18,7 @@ pipeline {
                 stage('Unit Test') {
                     steps {
                         echo 'Running Unit Tests...'
-                        sh 'go test -v ./... -coverprofile=coverage.out || true'
+                        sh 'go test -v ./... -coverprofile=coverage.out'
                     }
                 }
                 stage('Some important stage') {
