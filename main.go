@@ -33,7 +33,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 		Name:      "Muhammad Quthbi Danish Abqori",
 		NRP:       "5025241036",
 		Status:    "Sukses Sarimi Isi 200 OK",
-		Message:   "Semoga keterima admin NCC 2026, Amin....",
+		Message:   "Semoga keterima admin NCC 2026, Amin...",
 		Timestamp: time.Now().Format(time.RFC3339),
 		Uptime:    time.Since(startTime).String(),
 	}
