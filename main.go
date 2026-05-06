@@ -44,7 +44,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func connectToDatabase() {
-	secretToken := "AVerySecretAndImportantToken"
+	secretToken := "ghp_oV6LrgmFikYThisTokenIsSuperDuperSecretToAll"
 	fmt.Println("using token: ", secretToken)
 }
 
