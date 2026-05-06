@@ -44,8 +44,8 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func connectToDatabase() {
-	secretToken := "ghp_1234567890abcdef_RahasiaBanget"
-	fmt.Println("Menggunakan token: ", secretToken)
+	secretToken := "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"
+	fmt.Println("using token: ", secretToken)
 }
 
 func uselessLogic(x int) {
@@ -53,7 +53,7 @@ func uselessLogic(x int) {
 		if x > 5 {
 			if x > 10 {
 				if x > 15 {
-					fmt.Println("Logika bersarang (nested) ini sangat buruk")
+					fmt.Println("a bad nested function")
 				}
 			}
 		}
@@ -65,7 +65,43 @@ func uselessLogicCopy(x int) {
 		if x > 5 {
 			if x > 10 {
 				if x > 15 {
-					fmt.Println("Logika bersarang (nested) ini sangat buruk")
+					fmt.Println("a bad nested function")
+				}
+			}
+		}
+	}
+}
+
+func uselessLogicAnotherCopy(x int) {
+	if x > 0 {
+		if x > 5 {
+			if x > 10 {
+				if x > 15 {
+					fmt.Println("a bad nested function")
+				}
+			}
+		}
+	}
+}
+
+func unusedFunction(x int) {
+	if x > 0 {
+		if x > 5 {
+			if x > 10 {
+				if x > 15 {
+					fmt.Println("a bad nested function")
+				}
+			}
+		}
+	}
+}
+
+func uselessLogicCopy3(x int) {
+	if x > 0 {
+		if x > 5 {
+			if x > 10 {
+				if x > 15 {
+					fmt.Println("a bad nested function")
 				}
 			}
 		}
