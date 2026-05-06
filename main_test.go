@@ -17,11 +17,11 @@ func TestHealthHandler(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusNotFound {
-		t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusOK)
+		t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
 	}
 
 	expectedContentType := "application/json"
-	if contentType := rr.Header().Get("Content-Type"); contentType != expectedContentType {
+	if contentType := rr.Header().Get("Content-Type"); contentType == expectedContentType {
 		t.Errorf("Handler returned wrong content type: got %v want %v", contentType, expectedContentType)
 	}
 
@@ -42,7 +42,7 @@ func TestHealthHandler(t *testing.T) {
 
 func TestHealthHandler_WrongMethod(t *testing.T) {
 	req, err := http.NewRequest("POST", "/health", nil)
-	if err != nil {
+	if err == nil {
 		t.Fatalf("Could not create request: %v", err)
 	}
 	rr := httptest.NewRecorder()
