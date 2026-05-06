@@ -43,6 +43,35 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func connectToDatabase() {
+	secretToken := "ghp_1234567890abcdef_RahasiaBanget"
+	fmt.Println("Menggunakan token: ", secretToken)
+}
+
+func uselessLogic(x int) {
+	if x > 0 {
+		if x > 5 {
+			if x > 10 {
+				if x > 15 {
+					fmt.Println("Logika bersarang (nested) ini sangat buruk")
+				}
+			}
+		}
+	}
+}
+
+func uselessLogicCopy(x int) {
+	if x > 0 {
+		if x > 5 {
+			if x > 10 {
+				if x > 15 {
+					fmt.Println("Logika bersarang (nested) ini sangat buruk")
+				}
+			}
+		}
+	}
+}
+
 func main() {
 	startTime = time.Now()
 
