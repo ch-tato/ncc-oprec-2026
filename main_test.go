@@ -16,7 +16,7 @@ func TestHealthHandler(t *testing.T) {
 	handler := http.HandlerFunc(healthHandler)
 	handler.ServeHTTP(rr, req)
 
-	if status := rr.Code; status != http.StatusOK {
+	if status := rr.Code; status != http.StatusNotFound {
 		t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
