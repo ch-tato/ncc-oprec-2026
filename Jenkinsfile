@@ -29,7 +29,7 @@ pipeline {
                     -Dsonar.projectKey=${PROJECT_KEY} \
                     -Dsonar.projectName="${PROJECT_NAME}" \
                     -Dsonar.sources=. \
-                    -Dsonar.exclusions=**/*_test.go \
+                    -Dsonar.exclusions=**/*_test.go,go/**,data/** \
                     -Dsonar.go.coverage.reportPaths=coverage.out
                     """
                 }
