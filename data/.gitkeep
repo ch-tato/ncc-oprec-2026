@@ -1,0 +1,2 @@
+# This directory stores the SQLite database file (notes.db).
+# The file is auto-created when the application starts.

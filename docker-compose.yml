@@ -1,10 +1,12 @@
 services:
-  app:
+  notes-app:
     build: .
     # image: ghcr.io/ch-tato/ncc-oprec-2026:latest
-    container_name: module_2
+    container_name: module_3
     ports:
-      - "${PORT}:${PORT}"
-    env_file:
-      - .env
+      - "8880:8880"
+    # env_file:
+    #   - .env
+    volumes:
+      - ./data:/app/data
     restart: unless-stopped

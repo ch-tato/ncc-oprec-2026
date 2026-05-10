@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} — Notes App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="/" class="logo">MyNotes</a>
+        </header>
+
+        <main>
+            <article class="note-view" id="note-view-{{ .Note.ID }}">
+                <div class="note-view-header">
+                    <h1>{{ .Note.Title }}</h1>
+                    <div class="note-view-meta">
+                        <time datetime="{{ .Note.CreatedAt.Format " 2006-01-02T15:04:05Z" }}">
+                            Created {{ .Note.CreatedAt.Format "Jan 02, 2006 · 3:04 PM" }}
+                        </time>
+                        {{ if ne (.Note.CreatedAt.Format "2006-01-02") (.Note.UpdatedAt.Format "2006-01-02") }}
+                        <span class="separator">·</span>
+                        <time datetime="{{ .Note.UpdatedAt.Format " 2006-01-02T15:04:05Z" }}">
+                            Updated {{ .Note.UpdatedAt.Format "Jan 02, 2006 · 3:04 PM" }}
+                        </time>
+                        {{ end }}
+                    </div>
+                </div>
+
+                <div class="note-content prose">
+                    {{ .RenderedContent }}
+                </div>
+
+                <div class="note-view-actions">
+                    <a href="/notes/{{ .Note.ID }}/edit" class="btn btn-primary" id="btn-edit">Edit</a>
+                    <a href="/" class="btn btn-outline" id="btn-back">← Back to Notes</a>
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+
+</html>

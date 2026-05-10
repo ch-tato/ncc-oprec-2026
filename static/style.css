@@ -1,0 +1,507 @@
+/* ============================================================
+   Notes App — Stylesheet
+   A clean, modern design using Inter font and a soft colour palette.
+   ============================================================ */
+
+/* --- Reset & Base ------------------------------------------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface-hover: #222632;
+    --border: #2a2e3d;
+    --text: #e4e6ed;
+    --text-muted: #8b8fa3;
+    --primary: #6c5ce7;
+    --primary-hover: #7f71ed;
+    --primary-glow: rgba(108, 92, 231, 0.25);
+    --danger: #e74c5c;
+    --danger-hover: #f25e6d;
+    --error-bg: rgba(231, 76, 92, 0.12);
+    --error-border: rgba(231, 76, 92, 0.3);
+    --accent-gradient: linear-gradient(135deg, #6c5ce7 0%, #a78bfa 100%);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --transition: 0.2s ease;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--primary-hover);
+}
+
+/* --- Layout ------------------------------------------------- */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* --- Header ------------------------------------------------- */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
+.logo:hover {
+    color: var(--text);
+}
+
+/* --- Buttons ------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--accent-gradient);
+    color: #fff;
+    box-shadow: 0 2px 12px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--primary-glow);
+    color: #fff;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+    border-color: var(--text-muted);
+}
+
+.btn-danger {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid var(--error-border);
+}
+
+.btn-danger:hover {
+    background: var(--error-bg);
+    color: var(--danger-hover);
+}
+
+.btn-sm {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+}
+
+/* --- Note Cards --------------------------------------------- */
+.notes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.note-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all var(--transition);
+}
+
+.note-card:hover {
+    background: var(--surface-hover);
+    border-color: rgba(108, 92, 231, 0.3);
+    box-shadow: 0 0 0 1px var(--primary-glow);
+}
+
+.note-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.note-card-title {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.note-card-title:hover {
+    color: var(--primary);
+}
+
+.note-card-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.note-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.inline-form {
+    display: inline;
+}
+
+/* --- Empty State -------------------------------------------- */
+.empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.empty-state h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Forms -------------------------------------------------- */
+.form-wrapper {
+    max-width: 640px;
+}
+
+.form-wrapper h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.label-hint {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    resize: vertical;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.form-group textarea {
+    font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    min-height: 280px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+}
+
+/* --- Alerts ------------------------------------------------- */
+.alert {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-error {
+    background: var(--error-bg);
+    color: var(--danger);
+    border: 1px solid var(--error-border);
+}
+
+/* --- Note View ---------------------------------------------- */
+.note-view-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.note-view-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.note-view-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.separator {
+    opacity: 0.4;
+}
+
+.note-view-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+/* --- Prose (rendered Markdown) ------------------------------ */
+.prose {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text);
+}
+
+.prose h1, .prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6 {
+    color: var(--text);
+    font-weight: 700;
+    margin-top: 1.75em;
+    margin-bottom: 0.75em;
+    letter-spacing: -0.02em;
+}
+
+.prose h1 { font-size: 1.75rem; }
+.prose h2 { font-size: 1.4rem; }
+.prose h3 { font-size: 1.15rem; }
+
+.prose p {
+    margin-bottom: 1.25em;
+}
+
+.prose ul,
+.prose ol {
+    margin-bottom: 1.25em;
+    padding-left: 1.5em;
+}
+
+.prose li {
+    margin-bottom: 0.35em;
+}
+
+.prose blockquote {
+    border-left: 3px solid var(--primary);
+    padding: 0.5em 1em;
+    margin: 1.25em 0;
+    background: var(--surface);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-muted);
+}
+
+.prose code {
+    font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+    font-size: 0.875em;
+    background: var(--surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: #c4b5fd;
+}
+
+.prose pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin: 1.25em 0;
+}
+
+.prose pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: var(--text);
+    font-size: 0.85rem;
+}
+
+.prose img {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+}
+
+.prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25em 0;
+}
+
+.prose th,
+.prose td {
+    padding: 0.6em 1em;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+.prose th {
+    background: var(--surface);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+}
+
+.prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2em 0;
+}
+
+.prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.prose a:hover {
+    color: var(--primary-hover);
+}
+
+.prose strong {
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* --- Responsive --------------------------------------------- */
+@media (max-width: 640px) {
+    .container {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .note-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .note-card-actions {
+        width: 100%;
+    }
+
+    .note-view-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

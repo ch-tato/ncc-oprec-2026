@@ -8,24 +8,15 @@ pipeline {
         GOMODCACHE = "${WORKSPACE}/go/pkg/mod"
         SONARQUBE_ENV = 'SonarQube'
         SCANNER_HOME = tool 'sonar-scanner'
-        PROJECT_KEY   = 'ncc-module-2'
-        PROJECT_NAME  = "NCC Module 2"
+        PROJECT_KEY   = 'ncc-module-3'
+        PROJECT_NAME  = "NCC Module 3"
     }
 
     stages {
-        stage('Test and Important Stuff') {
-            parallel {
-                stage('Unit Test') {
-                    steps {
-                        echo 'Running Unit Tests...'
-                        sh 'go test -v ./... -coverprofile=coverage.out'
-                    }
-                }
-                stage('Some important stage') {
-                    steps {
-                         echo 'Doing some very IMPORTANT stuffs...'
-                    }
-                }
+        stage('Unit Test') {
+            steps {
+                echo 'Running Unit Tests...'
+                sh 'CGO_ENABLED=1 go test -v ./... -coverprofile=coverage.out'
             }
         }
 
@@ -54,18 +45,10 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker Image...'
-                sh 'docker build -t ncc-module-2:latest . || true'
-            }
-        }
-
         stage('Deploy to VPS') {
             steps {
                 echo 'Deploying to VPS...'
                 sh '''
-                echo "PORT=8888" > .env
                 docker compose pull || true
                 docker compose up -d --build --force-recreate
                 docker image prune -f
@@ -75,9 +58,6 @@ pipeline {
     }
 
     post {
-        always {
-            cleanWs()
-        }
         failure {
             echo 'Pipeline failed. Please check the logs.'
         }

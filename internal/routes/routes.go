@@ -1,0 +1,24 @@
+package routes
+
+import (
+	"notes-app/internal/handlers"
+
+	"github.com/gin-gonic/gin"
+)
+
+// Setup registers all application routes on the given Gin engine.
+func Setup(r *gin.Engine) {
+	// Home — list all notes.
+	r.GET("/", handlers.IndexHandler)
+
+	// Note CRUD routes.
+	notes := r.Group("/notes")
+	{
+		notes.GET("/new", handlers.NewNoteHandler)
+		notes.POST("", handlers.CreateNoteHandler)
+		notes.GET("/:id", handlers.ViewNoteHandler)
+		notes.GET("/:id/edit", handlers.EditNoteHandler)
+		notes.POST("/:id/update", handlers.UpdateNoteHandler)
+		notes.POST("/:id/delete", handlers.DeleteNoteHandler)
+	}
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple, clean note-taking application with Markdown support.">
+    <title>{{ .Title }} — Notes App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">MyNotes</h1>
+            <a href="/notes/new" class="btn btn-primary" id="btn-new-note">+ New Note</a>
+        </header>
+
+        <main>
+            {{ if .Notes }}
+            <div class="notes-grid">
+                {{ range .Notes }}
+                <article class="note-card" id="note-card-{{ .ID }}">
+                    <div class="note-card-body">
+                        <a href="/notes/{{ .ID }}" class="note-card-title">{{ .Title }}</a>
+                        <time class="note-card-date" datetime="{{ .CreatedAt.Format " 2006-01-02T15:04:05Z" }}">
+                            {{ .CreatedAt.Format "Jan 02, 2006 · 3:04 PM" }}
+                        </time>
+                    </div>
+                    <div class="note-card-actions">
+                        <a href="/notes/{{ .ID }}/edit" class="btn btn-sm btn-outline" id="btn-edit-{{ .ID }}">Edit</a>
+                        <form action="/notes/{{ .ID }}/delete" method="POST" class="inline-form"
+                            onsubmit="return confirm('Delete this note?');">
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                id="btn-delete-{{ .ID }}">Delete</button>
+                        </form>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+            {{ else }}
+            <div class="empty-state">
+                <div class="empty-state-icon">🗒️</div>
+                <h2>No notes yet</h2>
+                <p>Create your first note to get started.</p>
+                <a href="/notes/new" class="btn btn-primary">+ Create Note</a>
+            </div>
+            {{ end }}
+        </main>
+    </div>
+</body>
+
+</html>
