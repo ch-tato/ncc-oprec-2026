@@ -8,5 +8,8 @@ services:
     # env_file:
     #   - .env
     volumes:
-      - ./data:/app/data
+      - notes_db_data:/app/data
     restart: unless-stopped
+
+volumes:
+  notes_db_data:
